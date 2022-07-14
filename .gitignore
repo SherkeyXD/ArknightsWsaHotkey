@@ -1,5 +1,8 @@
 # Files
 assets/
 
+# Comiler
+ahk/
+
 # Debug
 AutoHotkey.exe
