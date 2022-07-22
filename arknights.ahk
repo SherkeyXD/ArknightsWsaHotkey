@@ -9,11 +9,15 @@ CoordMode, Mouse, Client
 #Include <defaults>
 #Include %A_ScriptDir%/lib/positions/2k.ahk
 
+;添加方舟窗口组
+GroupAdd, Arknights, ahk_class com.hypergryph.arknights
+GroupAdd, Arknights, ahk_class com.hypergryph.arknights.bilibili
+
 ; 获取 WSA 位置
 EnvGet, LocalAppData, LocalAppData
 WsaClient := LocalAppData . "\Microsoft\WindowsApps\MicrosoftCorporationII.WindowsSubsystemForAndroid_8wekyb3d8bbwe\WsaClient.exe"
 
-; 运行程序 lzh
+; 运行程序
 GoSub, CreateTray
 GoSub, CreateGui
 Return
@@ -37,15 +41,18 @@ Return
 
 Button_1:
 Run, %WsaClient% /launch wsa://com.hypergryph.arknights  ;官服
+;Sleep 500
+;WinActivate, ahk_class AutoHotkeyGUI
 Return
 
 Button_2:
 Run, %WsaClient% /launch wsa://com.hypergryph.arknights.bilibili  ;B服
+;Sleep 500
+;WinActivate, ahk_class AutoHotkeyGUI
 Return
 
 Button_3:
-GroupAdd, Arknights, com.hypergryph.arknights
-GroupAdd, Arknights, com.hypergryph.arknights.bilibili
+GroupActivate, Arknights
 Hotkey, IfWinActive, ahk_group Arknights
 Hotkey, %RetreatKey%, Retreat
 Hotkey, %SpeedToggleKey%, ToggleSpeed
@@ -55,6 +62,10 @@ Hotkey, %RecruitHourUpKey%, RecruitHourUp
 Hotkey, %RecruitHourDownKey%, RecruitHourDown
 Hotkey, %SkillTriggerKey%, TriggerSkill
 Hotkey, IfWinActive
+#IncludeAgain, %A_ScriptDir%/lib/positions/2k.ahk
+MsgBox 初始化完毕
+Return   ;不加这个会触发第一个热键
+#Include <keys>
 Return
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -103,6 +114,3 @@ TraySet2k:
 #IncludeAgain, %A_ScriptDir%/lib/positions/2k.ahk
 MsgBox 2k selected
 Return
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-#Include <keys>
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
