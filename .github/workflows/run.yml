@@ -30,15 +30,15 @@ jobs:
 
       - name: Compile ahk to exe
         run: |
-          ahk/Ahk2Exe.exe /in arknights.ahk /out wsarknights_x64.exe /icon icon.ico /compress 2 /base ahk/Unicode_64-bit.bin
-          ahk/Ahk2Exe.exe /in arknights.ahk /out wsarknights_x32.exe /icon icon.ico /compress 2 /base ahk/Unicode_32-bit.bin
+          ahk/Ahk2Exe.exe /in arknights.ahk /out ArknightsWsaHotkey_${{ inputs.version }}_x64.exe /icon icon.ico /compress 2 /base ahk/Unicode_64-bit.bin
+          ahk/Ahk2Exe.exe /in arknights.ahk /out ArknightsWsaHotkey_${{ inputs.version }}_x86.exe /icon icon.ico /compress 2 /base ahk/Unicode_32-bit.bin
 
       - name: Release and upload files
         uses: softprops/action-gh-release@v0.1.14
 #        if: startsWith(github.ref, 'refs/tags/')
         with: 
           files: |
-            wsarknights_x64.exe
-            wsarknights_x32.exe
+            ArknightsWsaHotkey_${{ inputs.version }}_x64.exe
+            ArknightsWsaHotkey_${{ inputs.version }}_x86.exe
           tag_name: v${{ inputs.version }}  #or {{ inputs.tags }}
           token: ${{ secrets.GITHUB_TOKEN }}
