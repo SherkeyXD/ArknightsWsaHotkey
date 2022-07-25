@@ -30,8 +30,9 @@ jobs:
 
       - name: Compile ahk to exe
         run: |
-          ahk/Ahk2Exe.exe /in arknights.ahk /out ArknightsWsaHotkey_${{ inputs.version }}_x64.exe /icon icon.ico /compress 2 /base ahk/Unicode_64-bit.bin
-          ahk/Ahk2Exe.exe /in arknights.ahk /out ArknightsWsaHotkey_${{ inputs.version }}_x86.exe /icon icon.ico /compress 2 /base ahk/Unicode_32-bit.bin
+          ahk/Ahk2Exe.exe /in arknights.ahk /out ArknightsWsaHotkey_${{ inputs.version }}_x64.exe /compress 2 /base ahk/Unicode_64-bit.bin
+          ahk/Ahk2Exe.exe /in arknights.ahk /out ArknightsWsaHotkey_${{ inputs.version }}_x86.exe /compress 2 /base ahk/Unicode_32-bit.bin
+          
 
       - name: Release and upload files
         uses: softprops/action-gh-release@v0.1.14

@@ -5,6 +5,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 SetDefaultMouseSpeed, 0
 CoordMode, Mouse, Client
 #Persistent
+;@Ahk2Exe-SetMainIcon icon.ico
+
 
 #Include <defaults>
 #Include %A_ScriptDir%/lib/positions/2k.ahk
@@ -72,7 +74,6 @@ Return
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; 托盘
 CreateTray:
-Menu, Tray, Icon , icon.ico, 1, 1
 Menu, Tray, Add
 Menu, Tray, Add, 主程序界面, CreateGui
 Menu, Tray, Add, 
@@ -84,6 +85,8 @@ Menu, Submenu1, Add, % "2k", TraySet2k
 Menu, Submenu1, Add, % "自动设置", TraySetAuto
 Menu, Submenu1, Add, % "手动设置", TraySetManual
 Menu, Tray, Add, 键位设置, :Submenu1
+Menu, Tray, Add
+Menu, Tray, Add, 退出, AppExit
 Return
 
 TrayShowGui:
@@ -99,7 +102,7 @@ MsgBox Giao
 Return
 
 TraySetAuto:
-MsgBox auto
+#IncludeAgain, %A_ScriptDir%/lib/positions/auto.ahk
 Return
 
 TraySetManual:
@@ -107,10 +110,15 @@ MsgBox manual
 Return
 
 TraySet1080p:
+#IncludeAgain, %A_ScriptDir%/lib/positions/1080p.ahk
 MsgBox 1080p selected
 Return
 
 TraySet2k:
 #IncludeAgain, %A_ScriptDir%/lib/positions/2k.ahk
 MsgBox 2k selected
+Return
+
+AppExit:
+ExitApp, 0
 Return
