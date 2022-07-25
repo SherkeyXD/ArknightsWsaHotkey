@@ -74,6 +74,7 @@ Return
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; 托盘
 CreateTray:
+Menu, Tray, Tip, 明日方舟 WSA 快捷键
 Menu, Tray, Add
 Menu, Tray, Add, 主程序界面, CreateGui
 Menu, Tray, Add, 
