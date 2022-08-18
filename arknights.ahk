@@ -34,9 +34,10 @@ Gui, Add, Text,, 这是一个可以在 WSA 运行明日方舟时使用快捷键�
 Gui, Add, Text,, 点击对应按钮来快速启动明日方舟:
 Gui, font, s10, Microsoft YaHei
 Gui, Add, Text,, `n`n`n默认键位设置: 在 2k 分辨率下将窗口全屏
+Gui, Add, Text,, 请点击右侧按钮进行初始化
 Gui, Add, Button, x20 y64 w95 h25 gButton_1, 官服
 Gui, Add, Button, x230 y64 w95 h25 gButton_2, B服
-Gui, Add, Button, x230 y154 w95 h25 gButton_3, 初始化
+Gui, Add, Button, x200 y158 w95 h25 gButton_3, 初始化
 Gui, Margin, 10, 10
 Gui, Show, AutoSize
 Return
@@ -65,7 +66,7 @@ Hotkey, %RecruitHourDownKey%, RecruitHourDown
 Hotkey, %SkillTriggerKey%, TriggerSkill
 Hotkey, IfWinActive
 #IncludeAgain, %A_ScriptDir%/lib/positions/2k.ahk
-MsgBox 初始化完毕
+MsgBox 初始化完毕，现在可以关闭程序窗口，程序会最小化到托盘。`n若需要退出请右击任务栏图标选择退出
 Return   ;不加这个会触发第一个热键
 #Include <keys>
 Return
@@ -74,6 +75,11 @@ Return
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; 托盘
 CreateTray:
+
+Menu, Tray, DeleteAll
+if (A_IsCompiled == "") {
+Menu, Tray, Icon, icon.ico, 1, 1
+}
 Menu, Tray, Tip, 明日方舟 WSA 快捷键
 Menu, Tray, Add
 Menu, Tray, Add, 主程序界面, CreateGui
