@@ -8,8 +8,6 @@ on:
 #        description: "Release version (e.g. 1.0.3)"   # {{ inputs.version }}
 #        required: true
   push: 
-    branches:
-      - "main"
     tags: 
       - "v*.*.*"
 
