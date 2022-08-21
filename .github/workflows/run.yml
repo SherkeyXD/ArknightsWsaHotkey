@@ -2,14 +2,16 @@ name: Compile and release
 
 
 on: 
-  workflow_dispatch: 
-    inputs: 
-      version: 
-        description: "Release version (e.g. 1.0.3)"   # {{ inputs.version }}
-        required: true
-#  push: 
-#    tags: 
-#      - "v*.*.*"
+#  workflow_dispatch: 
+#    inputs: 
+#      version: 
+#        description: "Release version (e.g. 1.0.3)"   # {{ inputs.version }}
+#        required: true
+  push: 
+    branches:
+      - "main"
+    tags: 
+      - "v*.*.*"
 
 
 jobs: 
@@ -22,24 +24,31 @@ jobs:
         with: 
           ref: main
 
+
+#      - name: Get current version
+#        id: vars
+#        run: echo ::set-output name=tag::${GITHUB_REF:10}
+
+
       - name: Get AutoHotKey with upx and mpress
         run: powershell curl -o ahk.zip https://github.com/SherkeyXD/ArknightsWsaHotkey/releases/download/v0.1.0/AutoHotKey_1.1.34.03_with_upx_and_mpress.zip
+
 
       - name: Unzip AutoHotKey
         run: 7z x ahk.zip -oahk/
 
+
       - name: Compile ahk to exe
         run: |
-          powershell ahk/Ahk2Exe.exe /in arknights.ahk /out ArknightsWsaHotkey_${{ inputs.version }}_x64.exe /compress 2 /base ahk/Unicode_64-bit.bin
-          powershell ahk/Ahk2Exe.exe /in arknights.ahk /out ArknightsWsaHotkey_${{ inputs.version }}_x86.exe /compress 2 /base ahk/Unicode_32-bit.bin
+          powershell ahk/Ahk2Exe.exe /in arknights.ahk /out ArknightsWsaHotkey_${{ github.ref_name }}_x64.exe /compress 2 /base ahk/Unicode_64-bit.bin
+          powershell ahk/Ahk2Exe.exe /in arknights.ahk /out ArknightsWsaHotkey_${{ github.ref_name }}_x32.exe /compress 2 /base ahk/Unicode_32-bit.bin
           
 
       - name: Release and upload files
         uses: softprops/action-gh-release@v0.1.14
-#        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/')
         with: 
           files: |
-            ArknightsWsaHotkey_${{ inputs.version }}_x64.exe
-            ArknightsWsaHotkey_${{ inputs.version }}_x86.exe
-          tag_name: v${{ inputs.version }}  #or {{ inputs.tags }}
+            ArknightsWsaHotkey_${{ github.ref_name }}_x64.exe
+            ArknightsWsaHotkey_${{ github.ref_name }}_x32.exe
           token: ${{ secrets.GITHUB_TOKEN }}
